@@ -1,79 +1,84 @@
-#!/usr/bin/env node
-
 /*
  * Script to download images from a Tumblr blog as backup or to upload to another location
  * Author: Chris Honiball
  * Author URL: chrishoniball.com
 */
 
-// Tumblr information
-var api_key = 'myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd';
-var secret_key = 'VZDqb392XyjWcetMsQheO9D8EU9tiXcl1DbPSm3jhWUhNGxq8a';
 
-// node modules
-var fs = require('fs');
-var http = require('http');
-var request = require('request');
-var url = require('url');
-var program = require('commander');
+// Object that will server as the instantiation for all future requests
+var BlogRequest = function(url, options) {
+	this.url = url;
 
-// process cmd line args
-program
-	.version('0.0.1')
-	.option('-l, --verbose', 'Print out information about what TumblrBackup is doing as it runs')
-	.parse(process.argv);
+	var defaults = {
+		type: ['all'], // types of posts to download
+		directory: 'downloadDir', // directory to download content to
+		rename: 'post', // what files will be named
+		save_meta: false, // if true, will save metadata in a separate file named post_#_meta.txt
+	};
 
-var args = program.parse(process.argv).args;
-var blogUrl = args[0];
-var downloadDir = args[1] || 'downloads/';
-var rename = args[2] || 'image';
-var offset = 0;
-var apiEndpoint = 'http://api.tumblr.com/v2/blog/' + blogUrl + '/posts/photo?api_key=' + api_key;
+	if (options !== null && typeof options === 'object') {
+		this.options = {
+			type: options.type || defaults.type,
+			directory: options.directory || defaults.directory,
+			rename: options.rename || defaults.rename,
+			save_meta: options.save_meta || defaults.save_meta
+		};
+	} else { this.options = defaults; }
 
-// add trailing slash if left off download dir
-if (downloadDir[downloadDir.length -1] !== '/') { downloadDir += '/'; }
+	this.getBlogInfo = function() {
 
-// GET request
-if (program.verbose) { console.log('Making request to ' + apiEndpoint); }
+	};
 
-(function downloadPhotos() {
-	var begin = offset;
-	http.get(apiEndpoint + '&offset=' + offset, function(res) {
-		if (program.verbose) { console.log('Tumblr responded with status ' + res.statusCode); }
+	this.downloadPost = function() {
 
-		if (res.statusCode == 200) {
-			var result = '';
-			res.on('data', function(chunk) {
-				result += chunk;
-			});
+	};
 
-			res.on('end', function() {
-				// note - tumblr returns at most 20 posts in a given query
-				var posts = JSON.parse(result).response.posts;
+	// Where options
+	this.downloadPosts = function(options) {
 
-				if (posts.length) {
-					posts.forEach(function(e, i) {
-						// grab URL to the full size photo
-						var photoUrl = e.photos[0].original_size.url;
-						if (program.verbose) { console.log('Downloading photo at URL: ' + photoUrl); }
+	};
 
-						//get format of photo - tumblr supports only jpg, jpeg, gif, png, bmp
-						var extension = url.parse(photoUrl).pathname.split('.').pop();
+};
 
-						// download photo
-						request(photoUrl).pipe(fs.createWriteStream(downloadDir + rename + '_' + offset + '.' + extension).on('finish', function() {
-							if (program.verbose) { console.log(photoUrl + ' sucessfully downloaded.'); }
-						}));
-						offset++;
-						// if the end of the individual photoset is reached, call function again
-						if (offset === begin + 20) {
-							downloadPhotos();
-						}
-					});
-				}
-			});
-		} else {
-			console.log('Error, Tumblr responded with status code ' + res.statusCode);
-		}
-	});
-})();
+
+
+// Download functions
+// These actually download the content of the post into a directory on the server/client machine
+// They all accept the following arguments:
+//
+
+function downloadTextPost(post)  {
+
+}
+
+function downloadPhotoPost(post)  {
+
+}
+
+function downloadQuotePost(post)  {
+
+}
+
+function downloadLinkPost(post)  {
+
+}
+
+function downloadChatPost(post)  {
+
+}
+
+function downloadAudioPost(post)  {
+
+}
+
+function downloadVideoPost(post)  {
+
+}
+
+function downloadAnswerPost(post)  {
+
+}
+
+exports.newRequest = function(url, options) {
+	return new BlogRequest(url, options);
+};

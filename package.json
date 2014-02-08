@@ -1,0 +1,11 @@
+{
+  "name": "tumblr-backup",
+  "version": "0.0.1",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "nodeunit": "~0.8.4",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
