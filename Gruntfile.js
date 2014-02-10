@@ -12,6 +12,9 @@ module.exports = function(grunt) {
 			all: ['tests/*.js', './*.js']
 		},
 		nodeunit: {
+			options: {
+				reporter: 'verbose'
+			},
 			all: ['tests/*.js']
 		}
 	});

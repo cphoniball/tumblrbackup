@@ -1,7 +1,7 @@
 #Todo for TumblrBackup.js
 
 - Create a driver program and a tumblrbackup module
-- Refactor to make code modular and testable
+* Refactor to make code modular and testable
 - Write tests for current functionality
 - Add support for different post types
 	- Text

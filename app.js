@@ -5,10 +5,6 @@ var api_key = 'myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd';
 var secret_key = 'VZDqb392XyjWcetMsQheO9D8EU9tiXcl1DbPSm3jhWUhNGxq8a';
 
 // node modules
-var fs = require('fs');
-var http = require('http');
-var request = require('request');
-var url = require('url');
 var program = require('commander');
 
 // process cmd line args
