@@ -22,7 +22,6 @@ var BlogRequest = function(url, options) {
 		save_meta: false, // if true, will save metadata in a separate file named post_#_meta.txt
 	};
 
-	// TODO - write tests for this
 	this.generateApiUrl = function(method, queries) {
 		var endpoint = 'http://api.tumblr.com/v2/blog/' + this.url + '/' + method + '?api_key=' + this.api_key;
 		if (typeof queries === 'object' && queries !== null) {
@@ -43,20 +42,61 @@ var BlogRequest = function(url, options) {
 
 	// Should return the complete json object that is returned by the Tumblr API
 	this.getBlogInfo = function(callback) {
-		http.get(this.generateApiUrl('info'), function(res) {
-			var data = '';
-			if (res.statusCode == 200) {
-				res.on('data', function(chunk) {
-					data += chunk;
-				});
-			} else { throw 'Tumblr returned status code !== 200'; }
-
-			res.on('end', function() {
-				callback(JSON.parse(data));
-			});
+		request(this.generateApiUrl('info'), function(error, response, body) {
+			if (!error && response.statusCode === 200) {
+				callback(JSON.parse(body));
+			}
 		});
 	};
 
+	// Get the array of posts from the Tumblr API, starting at the given offset
+	// Callback will be passed the results as an array of JSON objects
+	this.getBlogPosts = function(offset, callback) {
+		request(this.generateApiUrl('posts', { offset: offset }), function(error, response, body) {
+			if (!error && response.statusCode === 200) {
+				body = JSON.parse(body);
+				callback(body.response.posts);
+			}
+		});
+	};
+
+	// Download functions
+	// These actually download the content of the post into a directory on the server/client machine
+	// Args:
+	//    post: A JSON post object, as returned by the Tumblr API
+	this.downloadTextPost = function(post)  {
+
+	};
+
+	this.downloadPhotoPost = function(post)  {
+
+	};
+
+	this.downloadQuotePost = function(post)  {
+
+	};
+
+	this.downloadLinkPost = function(post)  {
+
+	};
+
+	this.downloadChatPost = function(post)  {
+
+	};
+
+	this.downloadAudioPost = function(post)  {
+
+	};
+
+	this.downloadVideoPost = function(post)  {
+
+	};
+
+	this.downloadAnswerPost = function(post)  {
+
+	};
+
+	// Generic download post function - this delegates to the above specific functions
 	this.downloadPost = function() {
 
 	};
@@ -70,42 +110,7 @@ var BlogRequest = function(url, options) {
 
 
 
-// Download functions
-// These actually download the content of the post into a directory on the server/client machine
-// They all accept the following arguments:
-//
 
-function downloadTextPost(post)  {
-
-}
-
-function downloadPhotoPost(post)  {
-
-}
-
-function downloadQuotePost(post)  {
-
-}
-
-function downloadLinkPost(post)  {
-
-}
-
-function downloadChatPost(post)  {
-
-}
-
-function downloadAudioPost(post)  {
-
-}
-
-function downloadVideoPost(post)  {
-
-}
-
-function downloadAnswerPost(post)  {
-
-}
 
 exports.newRequest = function(url, options) {
 	return new BlogRequest(url, options);

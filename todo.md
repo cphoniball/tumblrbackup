@@ -2,6 +2,7 @@
 
 - Create a driver program and a tumblrbackup module
 * Refactor to make code modular and testable
+- Write getBlogInfo method
 - Write tests for current functionality
 - Add support for different post types
 	- Text
