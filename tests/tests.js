@@ -4,6 +4,15 @@ var tumblrBackup = require('../tumblrbackup');
 // Unit tests
 ******************/
 
+var testRequest = tumblrBackup.newRequest('reflectphoto.tumblr.com');
+
+exports.generateApiUrlIsCorrect = function(test) {
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd', testRequest.generateApiUrl('posts'));
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917', testRequest.generateApiUrl('posts', { id: '73885771917' }));
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917&type=image', testRequest.generateApiUrl('posts', { id: '73885771917', type: 'image' }));
+	test.done();
+};
+
 exports.newRequestReturnsBlogRequestObjectNoOptions = function(test) {
 	var request = tumblrBackup.newRequest('http://example.tumblr.com');
 	testRequestProps(test, request);
@@ -38,6 +47,7 @@ exports.getBlogPostsReturnsArray = function(test) {
 		test.done();
 	});
 };
+
 
 /******************
 // Helper functions

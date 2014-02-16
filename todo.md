@@ -1,5 +1,6 @@
 #Todo for TumblrBackup.js
 
+- Test API URL generation function
 - Create a driver program and a tumblrbackup module
 * Refactor to make code modular and testable
 - Write getBlogInfo method

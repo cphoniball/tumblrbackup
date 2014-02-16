@@ -8,12 +8,16 @@ var fs = require('fs');
 var http = require('http');
 var request = require('request');
 var url = require('url');
+var querystring = require('querystring');
 
 // Object that will server as the instantiation for all future requests
 var BlogRequest = function(url, options) {
-	this.url = url;
 	this.api_key = 'myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd';
 	this.secret_key = 'VZDqb392XyjWcetMsQheO9D8EU9tiXcl1DbPSm3jhWUhNGxq8a';
+
+	this.url = url;
+
+	if (this.url.substring(0, 6) === 'http://') { this.url = this.url.substring(6); }
 
 	var defaults = {
 		type: ['all'], // types of posts to download
@@ -22,11 +26,11 @@ var BlogRequest = function(url, options) {
 		save_meta: false, // if true, will save metadata in a separate file named post_#_meta.txt
 	};
 
+	// TODO: make sure this strips the http:// from URLs if they are passed in
 	this.generateApiUrl = function(method, queries) {
 		var endpoint = 'http://api.tumblr.com/v2/blog/' + this.url + '/' + method + '?api_key=' + this.api_key;
 		if (typeof queries === 'object' && queries !== null) {
-			// TODO
-			//iterate over queries object and append params to url - Node might have a module to do this
+			endpoint += '&'  + querystring.stringify(queries);
 		}
 		return endpoint;
 	};
@@ -47,6 +51,11 @@ var BlogRequest = function(url, options) {
 				callback(JSON.parse(body));
 			}
 		});
+	};
+
+	// Returns the JSON object for the specific post ID; used mostly for testing purposes
+	this.getBlogPost = function(postid, callback) {
+
 	};
 
 	// Get the array of posts from the Tumblr API, starting at the given offset
