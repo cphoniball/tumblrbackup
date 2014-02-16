@@ -1,19 +1,15 @@
 #Todo for TumblrBackup.js
 
-- Test API URL generation function
-- Create a driver program and a tumblrbackup module
-* Refactor to make code modular and testable
-- Write getBlogInfo method
-- Write tests for current functionality
 - Add support for different post types
-	- Text
+	* Text
 	- Photo
 	- Quote
 	- Link
 	- Chat
 	- Audio
 	- Video
-
+ - Create a JSON/Ghost compatible upload format for the data
+ - Provide options for downloading text as HTML, Markdown, or plaintext
 
 
 I want to be able to use the module like this;

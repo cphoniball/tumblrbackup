@@ -22,7 +22,7 @@ var BlogRequest = function(url, options) {
 	var defaults = {
 		type: ['all'], // types of posts to download
 		directory: 'downloadDir', // directory to download content to
-		rename: 'post', // what files will be named
+		rename: 'post', // what files will be named, e.g. post_1.txt, post_2.txt
 		save_meta: false, // if true, will save metadata in a separate file named post_#_meta.txt
 	};
 
@@ -55,8 +55,7 @@ var BlogRequest = function(url, options) {
 
 	// Returns the JSON object for the specific post ID; used mostly for testing purposes
 	// Does not return the blog meta or post array object, just the object itself
-	// TODO: allow this to be called either by post ID or URL?
-	//
+	// TODO: allow this to be called either by post ID or URL?=
 	this.getBlogPost = function(postid, callback) {
 		request(this.generateApiUrl('posts', { id: postid }), function(error, response, body) {
 			if (!error && response.statusCode === 200) {
@@ -82,35 +81,36 @@ var BlogRequest = function(url, options) {
 	// These actually download the content of the post into a directory on the server/client machine
 	// Args:
 	//    post: A JSON post object, as returned by the Tumblr API
-	this.downloadTextPost = function(post)  {
+	//    callback: callback function as per Node API, takes err, file as arguments, where file is the file that was downloaded
+	this.downloadTextPost = function(post, callback)  {
 
 	};
 
-	this.downloadPhotoPost = function(post)  {
+	this.downloadPhotoPost = function(post, callback)  {
 
 	};
 
-	this.downloadQuotePost = function(post)  {
+	this.downloadQuotePost = function(post, callback)  {
 
 	};
 
-	this.downloadLinkPost = function(post)  {
+	this.downloadLinkPost = function(post, callback)  {
 
 	};
 
-	this.downloadChatPost = function(post)  {
+	this.downloadChatPost = function(post, callback)  {
 
 	};
 
-	this.downloadAudioPost = function(post)  {
+	this.downloadAudioPost = function(post, callback)  {
 
 	};
 
-	this.downloadVideoPost = function(post)  {
+	this.downloadVideoPost = function(post, callback)  {
 
 	};
 
-	this.downloadAnswerPost = function(post)  {
+	this.downloadAnswerPost = function(post, callback)  {
 
 	};
 

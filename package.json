@@ -6,6 +6,8 @@
     "grunt-contrib-jshint": "~0.8.0",
     "nodeunit": "~0.8.4",
     "grunt-contrib-nodeunit": "~0.3.0",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "html-md": "~3.0.2",
+    "html-to-text": "0.0.8"
   }
 }
