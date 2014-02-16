@@ -54,8 +54,16 @@ var BlogRequest = function(url, options) {
 	};
 
 	// Returns the JSON object for the specific post ID; used mostly for testing purposes
+	// Does not return the blog meta or post array object, just the object itself
+	// TODO: allow this to be called either by post ID or URL?
+	//
 	this.getBlogPost = function(postid, callback) {
-
+		request(this.generateApiUrl('posts', { id: postid }), function(error, response, body) {
+			if (!error && response.statusCode === 200) {
+				body = JSON.parse(body).response.posts[0];
+				callback(body);
+			}
+		});
 	};
 
 	// Get the array of posts from the Tumblr API, starting at the given offset
@@ -68,6 +76,7 @@ var BlogRequest = function(url, options) {
 			}
 		});
 	};
+
 
 	// Download functions
 	// These actually download the content of the post into a directory on the server/client machine

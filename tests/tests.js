@@ -39,8 +39,7 @@ exports.getValidBlogInfoReturnsObject = function(test) {
 };
 
 exports.getBlogPostsReturnsArray = function(test) {
-	var request = tumblrBackup.newRequest('reflectphoto.tumblr.com');
-	request.getBlogPosts(0, function(response) {
+	testRequest.getBlogPosts(0, function(response) {
 		test.ok(Array.isArray(response), 'getBlogPosts response is an array.');
 		test.ok(response.length, 'getBlogPosts response has length');
 		test.ok(response[0].id, 'getBlogPosts response first item has an id property');
@@ -48,6 +47,13 @@ exports.getBlogPostsReturnsArray = function(test) {
 	});
 };
 
+exports.getBlogPostReturnsObect = function(test) {
+	testRequest.getBlogPost('73885771917', function(response) {
+		test.ok(typeof response === 'object', 'getBlogPost returns an object.');
+		test.ok(response.post_url, 'getBlogPost response has a post_url property.');
+		test.done();
+	});
+};
 
 /******************
 // Helper functions
