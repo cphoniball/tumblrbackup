@@ -7,9 +7,16 @@ var tumblrBackup = require('../tumblrbackup');
 var testRequest = tumblrBackup.newRequest('reflectphoto.tumblr.com');
 
 exports.generateApiUrlIsCorrect = function(test) {
-	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd', testRequest.generateApiUrl('posts'));
-	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917', testRequest.generateApiUrl('posts', { id: '73885771917' }));
-	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917&type=image', testRequest.generateApiUrl('posts', { id: '73885771917', type: 'image' }));
+	var message = "GenerateApiUrl returns correct URL.";
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd', testRequest.generateApiUrl('posts'), message);
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917', testRequest.generateApiUrl('posts', { id: '73885771917' }), message);
+	test.equal('http://api.tumblr.com/v2/blog/reflectphoto.tumblr.com/posts?api_key=myRdVadkyg5oK9fKA5P31j4qhooSrxiUp4ba2XxHLhnsWw2qGd&id=73885771917&type=image', testRequest.generateApiUrl('posts', { id: '73885771917', type: 'image' }), message);
+	test.done();
+};
+
+exports.generateFileNameIsCorrect = function(test) {
+	test.equal('./downloads/post_1.txt', testRequest.generateFileName('.txt'), 'Text file generates correct file name.');
+	test.equal('./downloads/post_1.jpg', testRequest.generateFileName('.jpg'), 'JPG file generates correct file name.');
 	test.done();
 };
 
